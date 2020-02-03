@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Deelnemers</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-card *ngIf=\"information\">\n        <ion-card-header>\n            <ion-card-title>\n                {{ information.event_desc }}\n            </ion-card-title>\n        <ion-card-subtitle>\n        {{ information.date }}\n        </ion-card-subtitle>\n        </ion-card-header>\n     </ion-card>\n\n    \n    <form [formGroup]=\"validations_form\"  (ngSubmit)=\"onSubmit(validations_form.value)\">\n\n        <ion-item *ngFor=\"let part of participants\">\n            <ion-label position=\"floating\" color=\"primary\">{{ part.desc }}</ion-label>\n            <ion-input type=\"number\" formControlName=\"{{ part.id }}\"></ion-input>\n        </ion-item>\n        \n     <ion-button color=\"primary\" class=\"submit-btn\" expand=\"full\" type=\"submit\" [disabled]=\"!validations_form.valid\">Verder >></ion-button>\n  </form>\n\n    \n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Deelnemers</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-card *ngIf=\"information\">\n        <ion-card-header>\n            <ion-card-title>\n                {{ information.event_desc }}\n            </ion-card-title>\n        <ion-card-subtitle>\n        {{ information.date }}\n        </ion-card-subtitle>\n        </ion-card-header>\n     </ion-card>\n\n    \n    <form *ngIf=\"validations_form\" [formGroup]=\"validations_form\"  (ngSubmit)=\"onSubmit(validations_form.value)\">\n\n        <ion-item *ngFor=\"let part of participants\">\n            <ion-label position=\"floating\" color=\"primary\">{{ part.desc }}</ion-label>\n            <ion-input type=\"number\" formControlName=\"{{ part.id }}\"></ion-input>\n        </ion-item>\n        \n     <ion-button color=\"primary\" class=\"submit-btn\" expand=\"full\" type=\"submit\" [disabled]=\"!validations_form.valid\">Verder >></ion-button>\n  </form>\n\n    \n</ion-content>\n"
 
 /***/ }),
 
@@ -133,11 +133,17 @@ let ActivityPartsPage = class ActivityPartsPage {
         this.formBuilder = formBuilder;
         this.configService = configService;
         this.router = router;
-        this.information = null;
         this.participants = null;
     }
     ngOnInit() {
+    }
+    ionViewWillEnter() {
         this.information = this.activityService.chosen_event;
+        this.initParts();
+    }
+    initParts() {
+        var participants = this.information['participants']['object'];
+        this.participants = underscore__WEBPACK_IMPORTED_MODULE_4___default.a.values(participants);
         var participants = this.information['participants']['object'];
         this.participants = underscore__WEBPACK_IMPORTED_MODULE_4___default.a.values(participants);
         let formfields = {};

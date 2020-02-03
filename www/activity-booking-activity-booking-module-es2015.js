@@ -129,7 +129,7 @@ let ActivityBookingPage = class ActivityBookingPage {
         this.information = null;
         this.contact = null;
         this.participants = null;
-        this.results = { status: null, messages: [] };
+        this.results = { status: null, booking_id: null, messages: [] };
     }
     ngOnInit() {
         this.information = this.activityService.chosen_event;

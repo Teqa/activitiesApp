@@ -1775,7 +1775,6 @@ let ActivityService = class ActivityService {
         this.configService = configService;
         this.url = this.configService.url;
         this.search = '';
-        this.chosen_event = null;
         this.chosen_parts = null;
         this.chosen_contact = null;
         this.booked_events = [];

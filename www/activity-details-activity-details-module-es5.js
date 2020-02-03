@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ information.object_desc }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n \n<ion-content class=\"ion-padding\">\n \n  <ion-card *ngIf=\"information\">\n    <ion-card-header>\n      <ion-card-title>\n        {{ information.event_desc }}\n      </ion-card-title>\n      <ion-card-subtitle>\n        {{ information.date }}\n      </ion-card-subtitle>\n    </ion-card-header>\n    <ion-card-content class=\"ion-text-center\">\n      <img src=\"{{appurl}}{{information.image}}\" class=\"info-img\">\n      {{ information.event_desc }}\n \n      <ion-item lines=\"none\">\n        <ion-icon name=\"clock\" slot=\"start\"></ion-icon>\n        <ion-label class=\"ion-text-wrap\">{{ information.fromtime }} - {{ information.tiltime }}</ion-label>\n      </ion-item>\n      \n      <ion-item lines=\"none\">\n        <ion-icon name=\"contacts\" slot=\"start\"></ion-icon>\n        <ion-label>{{ information.Free }} van de {{ information.amount }} plaatsen vrij</ion-label>\n      </ion-item>\n\n      <ion-item lines=\"none\">\n        <ion-icon name=\"globe\" slot=\"start\"></ion-icon>\n        <ion-label class=\"ion-text-wrap\">{{ information.location }}</ion-label>\n      </ion-item>\n      \n      <ion-button shape=\"round\" color=\"success\" *ngIf=\"information.Free > 0 && blocked == false\" routerLink=\"/tab-nav/activity-parts\">\n        Maak reservering\n       </ion-button>\n      \n      <ion-badge color=\"success\" *ngIf=\"blocked == true\">Al geboekt</ion-badge>\n            \n    </ion-card-content>\n  </ion-card>\n  \n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title *ngIf=\"information\">{{ information.object_desc }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n \n<ion-content class=\"ion-padding\">\n \n  <ion-card *ngIf=\"information\">\n    <ion-card-header>\n      <ion-card-title>\n        {{ information.event_desc }}\n      </ion-card-title>\n      <ion-card-subtitle>\n        {{ information.date }}\n      </ion-card-subtitle>\n    </ion-card-header>\n    <ion-card-content class=\"ion-text-center\">\n      <img src=\"{{appurl}}{{information.image}}\" class=\"info-img\">\n      {{ information.event_desc }}\n \n      <ion-item lines=\"none\">\n        <ion-icon name=\"clock\" slot=\"start\"></ion-icon>\n        <ion-label class=\"ion-text-wrap\">{{ information.fromtime }} - {{ information.tiltime }}</ion-label>\n      </ion-item>\n      \n      <ion-item lines=\"none\">\n        <ion-icon name=\"contacts\" slot=\"start\"></ion-icon>\n        <ion-label>{{ information.Free }} van de {{ information.amount }} plaatsen vrij</ion-label>\n      </ion-item>\n\n      <ion-item lines=\"none\">\n        <ion-icon name=\"globe\" slot=\"start\"></ion-icon>\n        <ion-label class=\"ion-text-wrap\">{{ information.location }}</ion-label>\n      </ion-item>\n      \n      <ion-button shape=\"round\" color=\"success\" *ngIf=\"information.Free > 0 && blocked == false\" routerLink=\"/tab-nav/activity-parts\">\n        Maak reservering\n       </ion-button>\n      \n      <ion-badge color=\"success\" *ngIf=\"blocked == true\">Al geboekt</ion-badge>\n            \n    </ion-card-content>\n  </ion-card>\n  \n</ion-content>"
 
 /***/ }),
 
@@ -140,21 +140,26 @@ var ActivityDetailsPage = /** @class */ (function () {
         this.activatedRoute = activatedRoute;
         this.activityService = activityService;
         this.configService = configService;
-        this.information = null;
         this.blocked = true;
         this.appurl = this.configService.url;
     }
     ActivityDetailsPage.prototype.ngOnInit = function () {
         var _this = this;
         var event_id = this.activatedRoute.snapshot.params.event_id;
-        this.information = this.activityService.getDetails(event_id).subscribe(function (response) {
+        this.activityService.getDetails(event_id).subscribe(function (response) {
             _this.information = response;
             _this.activityService.chosen_event = response;
-            if (underscore__WEBPACK_IMPORTED_MODULE_4___default.a.contains(_this.activityService.booked_events, event_id))
-                _this.blocked = true;
-            else
-                _this.blocked = false;
         });
+    };
+    /*
+     * When this page is reloaded, check if the event was booked from this app
+     */
+    ActivityDetailsPage.prototype.ionViewWillEnter = function () {
+        var event_id = this.activatedRoute.snapshot.params.event_id;
+        if (underscore__WEBPACK_IMPORTED_MODULE_4___default.a.contains(this.activityService.booked_events, event_id))
+            this.blocked = true;
+        else
+            this.blocked = false;
     };
     ActivityDetailsPage.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },

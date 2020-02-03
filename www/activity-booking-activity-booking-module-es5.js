@@ -135,7 +135,7 @@ var ActivityBookingPage = /** @class */ (function () {
         this.information = null;
         this.contact = null;
         this.participants = null;
-        this.results = { status: null, messages: [] };
+        this.results = { status: null, booking_id: null, messages: [] };
     }
     ActivityBookingPage.prototype.ngOnInit = function () {
         var _this = this;
