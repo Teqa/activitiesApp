@@ -77,6 +77,8 @@
         <icon height="172" src="resources/ios/icon/icon-86@2x.png" width="172" />
         <icon height="196" src="resources/ios/icon/icon-98@2x.png" width="196" />
         <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
+        <icon src="icon/ios/icon.png" width="1024" height="1024" />
+        <preference name="phonegap-version" value="cli-7.1.0" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="1024" src="resources/ios/splash/Default-Portrait~ipad.png" width="768" />
