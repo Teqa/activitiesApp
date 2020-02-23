@@ -1,5 +1,5 @@
 {
-  "appId": "activities.ireserve.com",
+  "appId": "com.ireserve.activities",
   "appName": "Activities",
   "bundledWebRuntime": false,
   "npmClient": "npm",
