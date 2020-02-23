@@ -1,0 +1,14 @@
+{
+  "name": "activitiesApp",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular",
+  "proxies": [
+    {
+      "path": "/activities",
+      "proxyUrl": "https://rondleidingen.i-reserve.net/"
+    }
+  ]
+}
