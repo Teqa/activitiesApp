@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Activities</string>
+    <string name="title_activity_main">Activities</string>
+    <string name="package_name">com.ireserve.activities</string>
+    <string name="custom_url_scheme">com.ireserve.activities</string>
+</resources>
